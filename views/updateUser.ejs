@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Actualizar Usuario</title>
+        <meta charset="utf-8">
+        <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+        <!-- Google Web Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Inter:slnt,wght@-10..0,100..900&display=swap" rel="stylesheet">
+
+        <!-- Icon Font Stylesheet -->
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"/>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+        <!-- Boostrap -->
+        <link href="/css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- CSS Custom -->
+        <link href="/css/style.css" rel="stylesheet">
+    </head>
+<body>
+    <!-- Navbar & Hero Start -->
+    <div class="container-fluid nav-bar px-0 px-lg-4 py-lg-0">
+        <div class="container">
+            <nav class="navbar navbar-expand-lg navbar-light"> 
+                <a href="/" class="navbar-brand p-0">
+                    <h1 class="text-primary mb-0"><i class="fab fa-slack me-2"></i> Citiprest</h1>
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                    <span class="fa fa-bars"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <div class="d-flex justify-content-start navbar-nav mx-0 mx-lg-auto">
+                        <a href="/" class="nav-item nav-link active">Inicio</a>
+                        <a href="/simularPrestamo" class="nav-item nav-link ">Simula tu préstamo</a>
+                        <a href="/contactanos" class="nav-item nav-link">Contáctanos</a>
+                    </div>
+    
+                    <!-- Menú de Usuario -->
+                    <div class="dropdown ms-lg-3">
+                        <a href="#" class="d-flex align-items-center text-decoration-none" data-bs-toggle="dropdown" aria-expanded="false">
+                            <!-- Imagen de Perfil Circular -->
+                            <img src="/img/Usuario.png" alt="Usuario" class="rounded-circle" width="40" height="40">
+                        </a>
+                        <!-- Menú desplegable al hacer clic en la imagen -->
+                        <ul class="dropdown-menu dropdown-menu-end mt-2">
+                            <li><a class="dropdown-item" href="/auth/logout">Cerrar Sesión</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+    <!-- Navbar & Hero End -->
+
+    <div class="container my-5">
+        <h2 class="text-center pb-3 text-primary" >Actualizar Usuario</h2>
+        <form action="/admin/update-user" method="POST">
+            <input type="hidden" name="userId" value="<%= user._id %>">
+            
+            <div class="mb-3">
+                <label for="numero_documento" class="form-label">Número de Documento</label>
+                <input type="text" class="form-control" name="numero_documento" id="numero_documento" value="<%= user.numero_documento %>" required>
+            </div>
+    
+            <div class="mb-3">
+                <label for="tipo_documento" class="form-label">Tipo de Documento</label>
+                <select name="tipo_documento" class="form-select" required>
+                    <option value="Id" <%= user.tipo_documento === 'Id' ? 'selected' : '' %>>Id</option>
+                    <option value="Licencia" <%= user.tipo_documento === 'Licencia' ? 'selected' : '' %>>Licencia</option>
+                    <option value="Pasaporte" <%= user.tipo_documento === 'Pasaporte' ? 'selected' : '' %>>Pasaporte</option>
+                    <option value="Numero Social" <%= user.tipo_documento === 'Numero Social' ? 'selected' : '' %>>Numero Social</option>
+                    <option value="ITIN" <%= user.tipo_documento === 'ITIN' ? 'selected' : '' %>>ITIN</option>
+                    <option value="Cedula" <%= user.tipo_documento === 'Cedula' ? 'selected' : '' %>>Cedula</option>
+                    <option value="Otro" <%= user.tipo_documento === 'Otro' ? 'selected' : '' %>>Otro</option>
+                </select>
+            </div>
+    
+            <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" class="form-control" name="email" id="email" value="<%= user.email %>" required>
+            </div>
+    
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" class="form-control" name="password" id="password" placeholder="">
+            </div>
+    
+            <div class="mb-3">
+                <label for="role" class="form-label">Rol</label>
+                <select name="role" class="form-select" required>
+                    <option value="admin" <%= user.role === 'admin' ? 'selected' : '' %>>Admin</option>
+                    <option value="user" <%= user.role === 'user' ? 'selected' : '' %>>User</option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label for="nombre" class="form-label">Nombre</label>
+                <input type="text" class="form-control" name="nombre" id="nombre" value="<%= user.nombre %>">
+            </div>
+
+            <div class="mb-3">
+                <label for="saldo" class="form-label">Saldo</label>
+                <input type="text" class="form-control" name="saldo" id="saldo" value="<%= user.saldo %>">
+            </div>
+
+            <div class="mb-3">
+                <label for="estado_de_cuenta" class="form-label">Estado de la Cuenta</label>
+                <input type="text" class="form-control" name="estado_de_cuenta" id="estado_de_cuenta" value="<%= user.estado_de_cuenta %>">
+            </div>
+
+            <div class="mb-3">
+                <label for="tipo_de_cuenta" class="form-label">Tipo de Cuenta</label>
+                <input type="text" class="form-control" name="tipo_de_cuenta" id="tipo_de_cuenta" value="<%= user.tipo_de_cuenta %>">
+            </div>
+
+            <div class="mb-3">
+                <label for="numero_de_cuenta" class="form-label">Numero de Cuenta</label>
+                <input type="text" class="form-control" name="numero_de_cuenta" id="numero_de_cuenta" value="<%= user.numero_de_cuenta %>">
+            </div>
+
+            <!-- Agrega los demás campos del usuario -->
+            <div class="mb-3">
+                <label for="numero_movil" class="form-label">Número Móvil</label>
+                <input type="text" class="form-control" name="numero_movil" id="numero_movil" value="<%= user.numero_movil %>">
+            </div>
+    
+            <div class="mb-3">
+                <label for="direccion" class="form-label">Dirección</label>
+                <input type="text" class="form-control" name="direccion" id="direccion" value="<%= user.direccion %>">
+            </div>
+    
+            <div class="mb-3">
+                <label for="tiempo_de_residencia" class="form-label">Tiempo de Residencia</label>
+                <input type="text" class="form-control" name="tiempo_de_residencia" id="tiempo_de_residencia" value="<%= user.tiempo_de_residencia %>">
+            </div>
+    
+            <div class="mb-3">
+                <label for="pais_de_origen" class="form-label">País de Origen</label>
+                <input type="text" class="form-control" name="pais_de_origen" id="pais_de_origen" value="<%= user.pais_de_origen %>">
+            </div>
+    
+            <div class="mb-3">
+                <label for="estado_civil" class="form-label">Estado Civil</label>
+                <select name="estado_civil" class="form-select">
+                    <option value="Soltero/a" <%= user.estado_civil === 'Soltero/a' ? 'selected' : '' %>>Soltero/a</option>
+                    <option value="Casado/a" <%= user.estado_civil === 'Casado/a' ? 'selected' : '' %>>Casado/a</option>
+                    <option value="Viudo/a" <%= user.estado_civil === 'Viudo/a' ? 'selected' : '' %>>Viudo/a</option>
+                    <option value="Divorciado/a" <%= user.estado_civil === 'Divorciado/a' ? 'selected' : '' %>>Divorciado/a</option>
+                    <option value="Union Libre" <%= user.estado_civil === 'Union Libre' ? 'selected' : '' %>>Union Libre</option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label for="persona_a_cargo" class="form-label">Persona a Cargo</label>
+                <input type="text" class="form-control" name="persona_a_cargo" id="persona_a_cargo" value="<%= user.persona_a_cargo %>">
+            </div>
+
+            <div class="mb-3">
+                <label for="prestamos_activos" class="form-label">Prestamos Activos</label>
+                <input type="text" class="form-control" name="prestamos_activos" id="prestamos_activos" value="<%= user.prestamos_activos %>">
+            </div>
+
+            <div class="mb-3">
+                <label for="trabajo_actual" class="form-label">Trabajo Actual</label>
+                <input type="text" class="form-control" name="trabajo_actual" id="trabajo_actual" value="<%= user.trabajo_actual %>">
+            </div>
+
+            <div class="mb-3">
+                <label for="ganancias_mensuales" class="form-label">Ganancias Mensuales</label>
+                <input type="text" class="form-control" name="ganancias_mensuales" id="ganancias_mensuales" value="<%= user.ganancias_mensuales %>">
+            </div>
+
+            <div class="mb-3">
+                <label for="gastos_mensuales" class="form-label">Gastos Mensuales</label>
+                <input type="text" class="form-control" name="gastos_mensuales" id="gastos_mensuales" value="<%= user.gastos_mensuales %>">
+            </div>
+            
+            <div class="mb-3">
+                <label for="motivo_de_la_solicitud_de_prestamo" class="form-label">Motivo de la Solicitud de Prestamo</label>
+                <input type="text" class="form-control" name="motivo_de_la_solicitud_de_prestamo" id="motivo_de_la_solicitud_de_prestamo" value="<%= user.motivo_de_la_solicitud_de_prestamo %>">
+            </div>
+
+            <div class="mb-3">
+                <label for="monto_a_solicitar" class="form-label">Monto a Solicitar</label>
+                <input type="text" class="form-control" name="monto_a_solicitar" id="monto_a_solicitar" value="<%= user.monto_a_solicitar %>">
+            </div>
+
+            <div class="mb-3">
+                <label for="valor_cuota" class="form-label">Valor de Cuota</label>
+                <input type="text" class="form-control" name="valor_cuota" id="valor_cuota" value="<%= user.valor_cuota %>">
+            </div>    
+    
+            <button type="submit" class="btn me-3 btn-success">Guardar Cambios</button>
+            <a href="/admin/dashboard" class="btn btn-danger">Cancelar</a>
+        </form>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

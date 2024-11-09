@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <title>Admin Dashboard</title>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Inter:slnt,wght@-10..0,100..900&display=swap" rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Boostrap -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <!-- CSS Custom -->
+    <link href="/css/style.css" rel="stylesheet">
+    <style>
+        #userList {
+            display: none;
+            margin-top: 20px;
+        }
+
+        #userForm {
+            display: none;
+        }
+
+        .btn-icon {
+            background: none;
+            border: none;
+            padding: 0;
+            cursor: pointer;
+        }
+
+        .btn-icon:focus {
+            outline: none; /* Elimina el borde de enfoque predeterminado */
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar & Hero Start -->
+    <div class="container-fluid nav-bar px-0 px-lg-4 py-lg-0">
+        <div class="container">
+            <nav class="navbar navbar-expand-lg navbar-light"> 
+                <a href="/" class="navbar-brand p-0">
+                    <h1 class="text-primary mb-0"><i class="fab fa-slack me-2"></i> Citiprest</h1>
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                    <span class="fa fa-bars"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <div class="d-flex justify-content-start navbar-nav mx-0 mx-lg-auto">
+                        <a href="/" class="nav-item nav-link active">Inicio</a>
+                        <a href="/simularPrestamo" class="nav-item nav-link ">Simula tu préstamo</a>
+                        <a href="/contactanos" class="nav-item nav-link">Contáctanos</a>
+                        <a href="/auth/logout" class="nav-item nav-link d-block d-lg-none">Cerrar Sesión</a>                    </div>
+    
+                    <!-- Menú de Usuario -->
+                    <div class="dropdown ms-lg-3 d-none y d-lg-block">
+                        <a href="#" class="d-flex align-items-center text-decoration-none" data-bs-toggle="dropdown" aria-expanded="false">
+                            <!-- Imagen de Perfil Circular -->
+                            <img src="/img/Usuario.png" alt="Usuario" class="rounded-circle" width="40" height="40">
+                        </a>
+                        <!-- Menú desplegable al hacer clic en la imagen -->
+                        <ul class="dropdown-menu dropdown-menu-end mt-2">
+                            <li><a class="dropdown-item" href="/auth/logout">Cerrar Sesión</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+    <!-- Navbar & Hero End -->
+    <!-- Formulario para crear usuarios -->
+    <% if (success) { %>
+        <div class=" m-3 text-center alert alert-success"><%= success %></div>
+    <% } %>
+    <% if (error) { %>
+        <div class="m-3 text-center alert-danger"><%= error %></div>
+    <% } %>
+    <section class="d-flex bg-light justify-content-center pt-3 m-4 shadow-sm" >
+        <div class="text-center">
+            <h2 class="text-primary" onclick="toggleUserForm()">Crear Usuario</h2>
+            <div id="userForm">
+                <form class="d-flex justify-content-center flex-wrap p-1" action="/admin/create-user" method="POST" style="display: none;">
+                    <div class="col-md-6 p-3">
+                        <input class="form-control form-control-lg m-2" type="text" name="numero_documento" placeholder="Número de Documento" required />
+                        <input class="form-control form-control-lg m-2" type="text" name="nombre" placeholder="Nombre" required />
+
+                        <select class="form-control form-control-lg m-2" name="tipo_documento" required>
+                            <option value="Id">Id</option>
+                            <option value="Licencia">Licencia</option>
+                            <option value="Pasaporte">Pasaporte</option>
+                            <option value="Numero Social">Número Social</option>
+                            <option value="ITIN">ITIN</option>
+                            <option value="Cedula">Cédula</option>
+                            <option value="Otro">Otro</option>
+                        </select>
+                        
+                        <input class="form-control form-control-lg m-2" type="email" name="email" placeholder="Correo Electrónico" required />
+                        <input class="form-control form-control-lg m-2" type="password" name="password" placeholder="Contraseña" required />
+                        
+                        <select class="form-control form-control-lg m-2" name="role" required>
+                            <option value="user">Usuario</option>
+                            <option value="admin">Administrador</option>
+                        </select>
+                        
+                        <input class="form-control form-control-lg m-2" type="text" name="numero_movil" placeholder="Número Móvil" />
+                        <input class="form-control form-control-lg m-2" type="text" name="direccion" placeholder="Dirección" />
+                        <input class="form-control form-control-lg m-2" type="text" name="tiempo_de_residencia" placeholder="Tiempo de Residencia" />
+                        <input class="form-control form-control-lg m-2" type="text" name="pais_de_origen" placeholder="País de Origen" />
+                        <select class="form-control form-control-lg m-2" name="estado_civil" required>
+                            <option value="Soltero/a">Soltero/a</option>
+                            <option value="Casado/a">Casado/a</option>
+                            <option value="Viudo/a">Viudo/a</option>
+                            <option value="Divorciado/a">Divorciado/a</option>
+                            <option value="Union Libre">Unión Libre</option>
+                        </select>
+                        <input class="form-control form-control-lg m-2" type="text" name="persona_a_cargo" placeholder="Persona a Cargo" />
+                    </div>
+            
+                    <div class="col-md-6 p-3">
+                        <input class="form-control form-control-lg m-2" type="text" name="prestamos_activos" placeholder="Préstamos Activos" />
+                        <input class="form-control form-control-lg m-2" type="text" name="trabajo_actual" placeholder="Trabajo Actual" />
+                        <input class="form-control form-control-lg m-2" type="text" name="ganancias_mensuales" placeholder="Ganancias Mensuales" />
+                        <input class="form-control form-control-lg m-2" type="text" name="gastos_mensuales" placeholder="Gastos Mensuales" />
+                        <input class="form-control form-control-lg m-2" type="text" name="motivo_de_la_solicitud_de_prestamo" placeholder="Motivo de la Solicitud de Préstamo" />
+                        <input class="form-control form-control-lg m-2" type="text" name="monto_a_solicitar" placeholder="Monto a Solicitar" />
+                        <input class="form-control form-control-lg m-2" type="text" name="valor_cuota" placeholder="Valor de la Cuota" />
+                        
+                        <input class="form-control form-control-lg m-2" type="text" name="saldo" placeholder="Saldo" required />
+                        <input class="form-control form-control-lg m-2" type="text" name="tipo_de_cuenta" placeholder="Tipo de Cuenta" required />
+                        <input class="form-control form-control-lg m-2" type="text" name="numero_de_cuenta" placeholder="Número de Cuenta" required />
+                        <input class="form-control form-control-lg m-2" type="text" name="estado_de_cuenta" placeholder="Estado de Cuenta" required />
+                    </div>
+            
+                    <div class="col-12">
+                        <button class="btn btn-primary btn-lg btn-block mb-3" id="crearUsuario" type="submit">Crear Usuario</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+    <section class="d-flex bg-light justify-content-center pt-3 m-4 shadow-sm">
+        <div class="text-center">
+            <h2 class="text-success" id="listarUsuarios" onclick="toggleUserList()">Mostrar Usuarios</h2>
+        
+            
+            <!-- Contenedor para la lista de usuarios -->
+            <div id="userList" class="row">
+                <!-- Barra de búsqueda -->
+                 <div class="container" >
+                    <input type="text" id="searchInput" class="w-100 form-control my-3" placeholder="Buscar por nombre..." onkeyup="filterUsers()">
+                 </div>                
+                <% if (users && users.length > 0) { %>
+                    <% users.forEach(user => { %>
+                        <div class="mb-4 user-card" data-name="<%= user.nombre.toLowerCase() %>">
+                            <div class="card shadow-sm">
+                                <div class="card-body">
+                                    <h5 class="card-title"><%= user.nombre %></h5>
+                                    <p class="card-text">
+                                        <strong>Documento:</strong> <%= user.numero_documento %> <br>
+                                        <strong>Email:</strong> <%= user.email %> <br>
+                                        <strong>Rol:</strong> <%= user.role %>
+                                    </p>
+                                    
+                                    <!-- Botón de Eliminar -->
+                                    <form action="/admin/delete-user" method="POST" class="d-inline">
+                                        <input type="hidden" name="userId" value="<%= user._id %>">
+                                        <button type="submit" onclick="return confirm('¿Seguro que deseas eliminar este usuario?')" class="btn btn-danger btn-sm">
+                                            <i class="fas fa-trash-alt"></i> Eliminar
+                                        </button>
+                                    </form>
+                
+                                    <!-- Botón de Actualizar -->
+                                    <a href="/admin/update-user/<%= user._id %>" class="btn btn-primary btn-sm">
+                                        <i class="fas fa-edit"></i> Editar
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    <% }); %>
+                <% } else { %>
+                    <p>No hay usuarios disponibles.</p>
+                <% } %>
+
+            </div>
+        </div>
+    </section>
+    <script>
+        // Script para alternar la visibilidad de la lista de usuarios
+        function toggleUserList() {
+            const userList = document.getElementById("userList");
+            if (userList.style.display === "none" || userList.style.display === "") {
+                userList.style.display = "block";
+            } else {
+                userList.style.display = "none";
+            }
+        }
+
+        function toggleUserForm() {
+            const createForm = document.getElementById("userForm");
+            if (createForm.style.display === "none" || createForm.style.display === "") {
+                createForm.style.display = "block";
+            } else {
+                createForm.style.display = "none";
+            }
+        }
+
+        function filterUsers() {
+            const input = document.getElementById('searchInput').value.toLowerCase();
+            const userCards = document.querySelectorAll('.user-card');
+
+            userCards.forEach(card => {
+                const name = card.getAttribute('data-name');
+                if (name.includes(input)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+
