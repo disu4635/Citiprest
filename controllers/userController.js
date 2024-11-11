@@ -1,26 +1,55 @@
 const User = require('../models/User'); 
 const bcrypt = require('bcrypt');
 
-exports.getUserDashboard = async (req, res) => {
-    try {
-        // Buscar el usuario en la base de datos usando su ID del token
-        const user = await User.findById(req.user.id);
-        
-        if (!user) {
-            return res.status(404).render('error', { errorMessage: 'Usuario no encontrado' });
-        }
+function formatCurrency(value) {
+    return new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP' }).format(value);
+}
 
-        // Enviar los datos del usuario a la vista
-        res.render('userDashboard', {
-            saldo: user.saldo,
-            nombre: user.nombre,
-            estado_de_cuenta: user.estado_de_cuenta,
-            tipo_de_cuenta: user.tipo_de_cuenta,
-            numero_de_cuenta: user.numero_de_cuenta
-        });
-    } catch (error) {
-        console.error(error);
-        return res.status(500).render('error', { errorMessage: 'Error interno del servidor' });
+exports.getUserDashboard = (req, res) => {
+    const userId = req.params.userId; // Obtener el ID del usuario desde la URL
+    const loggedInUser = req.user; // Información del usuario logueado desde el token
+
+    // Verificar si el usuario es el dueño de los datos o es admin
+    if (loggedInUser.role === 'admin' || loggedInUser.id === userId) {
+        // Buscar el usuario por su ID
+        User.findById(userId)
+            .then(user => {
+                if (!user) {
+                    return res.status(404).render('error', { errorMessage: 'Usuario no encontrado.' });
+                }
+                // Renderizar la vista con los datos del usuario encontrado
+                res.render('userDashboard', { 
+                    nombre: user.nombre,
+                    saldo: formatCurrency(user.saldo),
+                    estado_de_cuenta: user.estado_de_cuenta,
+                    tipo_de_cuenta: user.tipo_de_cuenta,
+                    numero_de_cuenta: user.numero_de_cuenta,
+                    numero_documento: user.numero_documento,
+                    tipo_documento: user.tipo_documento,
+                    numero_movil: user.numero_movil,
+                    direccion: user.direccion,
+                    tiempo_de_residencia: user.tiempo_de_residencia,
+                    pais_de_origen: user.pais_de_origen,
+                    estado_civil: user.estado_civil,
+                    persona_a_cargo: user.persona_a_cargo,
+                    prestamos_activos: user.prestamos_activos,
+                    trabajo_actual: user.trabajo_actual,
+                    ganancias_mensuales: formatCurrency(user.ganancias_mensuales,),
+                    gastos_mensuales: formatCurrency(user.gastos_mensuales),
+                    motivo_de_la_solicitud_de_prestamo: user.motivo_de_la_solicitud_de_prestamo,
+                    monto_a_solicitar: formatCurrency(user.monto_a_solicitar),
+                    valor_cuota: formatCurrency(user.valor_cuota),
+                    logued_user_rol: loggedInUser.role,
+                    _id: userId,
+                });
+            })
+            .catch(err => {
+                console.error(err);
+                res.status(500).render('error', { errorMessage: 'Error interno del servidor.' });
+            });
+    } else {
+        // Si el usuario no tiene permiso, mostrar error de acceso
+        return res.status(403).render('error', { errorMessage: 'Acceso denegado. No tienes permiso para ver esta información.' });
     }
 };
 
@@ -85,3 +114,22 @@ exports.updateUser = async (req, res) => {
     }
 };
 
+exports.updateUserSaldo = async (req, res) => {
+    const { userId } = req.params;
+    const { newSaldo } = req.body;
+    const loggedInUser = req.user;
+
+    try {
+        // Verificar si el usuario logueado es admin
+        if (loggedInUser.role !== 'admin') {
+            return res.status(403).render('error', { errorMessage: 'No tienes permiso para realizar esta acción.' });
+        }
+
+        // Actualizar el saldo del usuario en la base de datos
+        await User.findByIdAndUpdate(userId, { saldo: newSaldo });
+        res.redirect(`/user/dashboard/${userId}`);
+    } catch (error) {
+        console.error(error);
+        res.status(500).render('error', { errorMessage: 'Error al actualizar el saldo.' });
+    }
+};

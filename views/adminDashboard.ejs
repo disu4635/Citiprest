@@ -133,7 +133,7 @@
                         <input class="form-control form-control-lg m-2" type="text" name="monto_a_solicitar" placeholder="Monto a Solicitar" />
                         <input class="form-control form-control-lg m-2" type="text" name="valor_cuota" placeholder="Valor de la Cuota" />
                         
-                        <input class="form-control form-control-lg m-2" type="text" name="saldo" placeholder="Saldo" required />
+                        <input class="form-control form-control-lg m-2" type="number" name="saldo" placeholder="Saldo" required />
                         <input class="form-control form-control-lg m-2" type="text" name="tipo_de_cuenta" placeholder="Tipo de Cuenta" required />
                         <input class="form-control form-control-lg m-2" type="text" name="numero_de_cuenta" placeholder="Número de Cuenta" required />
                         <input class="form-control form-control-lg m-2" type="text" name="estado_de_cuenta" placeholder="Estado de Cuenta" required />
@@ -181,6 +181,10 @@
                                     <a href="/admin/update-user/<%= user._id %>" class="btn btn-primary btn-sm">
                                         <i class="fas fa-edit"></i> Editar
                                     </a>
+                                    <!-- Botón de Visualizar -->
+                                    <a href="/user/dashboard/<%= user._id %>" class="btn btn-info btn-sm">
+                                        <i class="fas fa-user"></i> Ver Dashboard
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -188,7 +192,6 @@
                 <% } else { %>
                     <p>No hay usuarios disponibles.</p>
                 <% } %>
-
             </div>
         </div>
     </section>

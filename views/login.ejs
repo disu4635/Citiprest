@@ -55,7 +55,7 @@
                 <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
                     <form action="/auth/login" method="POST">
                         <% if (error) { %>
-                            <div class="alert alert-danger" role="alert">
+                            <div class="alert alert-danger mt-2" role="alert">
                                 <%= error %>
                             </div>
                         <% } %>
@@ -81,26 +81,26 @@
         <!-- Login Form End -->
         <!-- Modal de Cambio de Cuenta -->
         <% if (userAuthenticated) { %>
-        <div class="modal fade" id="sessionModal" tabindex="-1" role="dialog" aria-labelledby="sessionModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="sessionModalLabel">Ya has iniciado sesión</h5>
-                    </div>
-                    <div class="modal-body">
-                        ¿Te gustaría cambiar de cuenta?
-                    </div>
-                    <div class="modal-footer">
-                        <a href="/auth/logout" class="btn btn-warning">Cambiar de cuenta</a>
-                        <% if (userRole === 'admin') { %>
-                            <a href="/admin/dashboard" class="btn btn-primary">Volver al dashboard</a>
-                        <% } else if (userRole === 'user') { %>
-                            <a href="/user/dashboard" class="btn btn-primary">Volver al dashboard</a>
-                        <% } %>
+            <div class="modal fade" id="sessionModal" tabindex="-1" role="dialog" aria-labelledby="sessionModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="sessionModalLabel">Ya has iniciado sesión</h5>
+                        </div>
+                        <div class="modal-body">
+                            ¿Te gustaría cambiar de cuenta?
+                        </div>
+                        <div class="modal-footer">
+                            <a href="/auth/logout" class="btn btn-warning">Cambiar de cuenta</a>
+                            <% if (userRole === 'admin') { %>
+                                <a href="/admin/dashboard" class="btn btn-primary">Volver al dashboard</a>
+                            <% } else if (userRole === 'user') { %>
+                                <a href="/user/dashboard/<%= userId %>" class="btn btn-primary">Volver al dashboard</a>
+                            <% } %>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
         <% } %>
 
         <!-- Footer Start -->

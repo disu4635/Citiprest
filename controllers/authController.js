@@ -15,7 +15,7 @@ exports.getLogin = (req, res) => {
     if (token) {
         const decoded = verifyToken(token);
         if (decoded) {
-            return res.render('login', { userAuthenticated: true, userRole: decoded.role, error: null });
+            return res.render('login', { userAuthenticated: true, userRole: decoded.role, error: null, userId: decoded.id });
         }
     }
     // Si no hay token o no es válido
@@ -42,15 +42,14 @@ exports.login = async (req, res) => {
         // Crear el token JWT
         const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '1h' });
         res.cookie('token', token, { httpOnly: true });
-        
-        // Redirigir según el rol del usuario
+
+        // Redirigir según el rol del usuario, incluyendo el ID en la URL
         if (user.role === 'admin') {
             return res.redirect('/admin/dashboard');
         } else {
-            return res.redirect('/user/dashboard');
+            return res.redirect(`/user/dashboard/${user._id}`);
         }
     } catch (error) {
-        // Aquí manejamos el error de forma manual
         console.error(error);
         return res.status(500).render('error', { errorMessage: 'Error interno del servidor' });
     }
