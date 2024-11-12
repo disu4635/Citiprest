@@ -40,6 +40,16 @@
         .btn-icon:focus {
             outline: none; /* Elimina el borde de enfoque predeterminado */
         }
+
+        .btn-dashboard{
+            background: #013a73;
+            color: white;
+        }
+
+        .btn-dashboard:hover {
+            background: black; /* Color de fondo más claro al hacer hover */
+            color: white;
+        }
     </style>
 </head>
 <body>
@@ -76,6 +86,7 @@
         </div>
     </div>
     <!-- Navbar & Hero End -->
+     
     <!-- Formulario para crear usuarios -->
     <% if (success) { %>
         <div class=" m-3 text-center alert alert-success"><%= success %></div>
@@ -110,6 +121,7 @@
                             <option value="admin">Administrador</option>
                         </select>
                         
+                        <input class="form-control form-control-lg m-2" type="text" name="numero_de_ruta" placeholder="Número de Ruta" required />
                         <input class="form-control form-control-lg m-2" type="text" name="numero_movil" placeholder="Número Móvil" />
                         <input class="form-control form-control-lg m-2" type="text" name="direccion" placeholder="Dirección" />
                         <input class="form-control form-control-lg m-2" type="text" name="tiempo_de_residencia" placeholder="Tiempo de Residencia" />
@@ -182,7 +194,7 @@
                                         <i class="fas fa-edit"></i> Editar
                                     </a>
                                     <!-- Botón de Visualizar -->
-                                    <a href="/user/dashboard/<%= user._id %>" class="btn btn-info btn-sm">
+                                    <a href="/user/dashboard/<%= user._id %>" class="btn btn-dashboard btn-sm">
                                         <i class="fas fa-user"></i> Ver Dashboard
                                     </a>
                                 </div>

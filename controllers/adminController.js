@@ -26,7 +26,8 @@ exports.createUser = async (req, res) => {
         saldo,
         tipo_de_cuenta,
         numero_de_cuenta,
-        estado_de_cuenta
+        estado_de_cuenta,
+        numero_de_ruta
     } = req.body;
 
     // Hashear la contraseña antes de guardarla en la base de datos
@@ -57,7 +58,8 @@ exports.createUser = async (req, res) => {
             saldo,
             tipo_de_cuenta,
             numero_de_cuenta,
-            estado_de_cuenta
+            estado_de_cuenta,
+            numero_de_ruta
         });
 
         // Guardar el nuevo usuario en la base de datos

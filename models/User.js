@@ -21,13 +21,13 @@ const userSchema = new mongoose.Schema({
     monto_a_solicitar: {type: String},
     valor_cuota: {type: String},
     saldo: { type: Number, required: true },
+    numero_de_ruta: {type: String, required: true},
     tipo_de_cuenta: {type: String, required: true},
     numero_de_cuenta: {type: String, required: true},
     estado_de_cuenta: {type: String, required: true},
-    //Datos Tarketa
+    //Datos Tarjeta
     numero_de_tarjeta: {type: String},
     fecha_caducidad_tarjeta: {type: Date},
-    saldo_tarjeta: {type: String}
 
 }, { timestamps: true }); 
 
