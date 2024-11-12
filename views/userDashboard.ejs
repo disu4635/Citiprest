@@ -151,9 +151,9 @@
                 <h6 class="text_bold text-uppercase mb-1 font-weight-bold d-flex justify-content-between">
                     ESTADO DE CUENTA: 
                     <% if (estado_de_cuenta.toLowerCase() === 'activo' || estado_de_cuenta.toLowerCase() === 'activa') { %>
-                        <span class="text-success"><%= estado_de_cuenta %></span>
+                        <span class="text-success text-end"><%= estado_de_cuenta %></span>
                     <% } else { %>
-                        <span class="text-danger"><%= estado_de_cuenta %></span>
+                        <span class="text-danger text-end"><%= estado_de_cuenta %></span>
                     <% } %>
                 </h6>
                 <p class="d-flex justify-content-between text_bold mb-1">Tipo de cuenta: <span class="text_normal"><%= tipo_de_cuenta %></span></p>
