@@ -120,9 +120,14 @@
                             <option value="user">Usuario</option>
                             <option value="admin">Administrador</option>
                         </select>
-                        
+                        <input class="form-control form-control-lg m-2" type="number" name="saldo" placeholder="Saldo" required />
+                        <input class="form-control form-control-lg m-2" type="text" name="tipo_de_cuenta" placeholder="Tipo de Cuenta" required />
+                        <input class="form-control form-control-lg m-2" type="text" name="numero_de_cuenta" placeholder="Número de Cuenta" required />
+                        <input class="form-control form-control-lg m-2" type="text" name="estado_de_cuenta" placeholder="Estado de Cuenta" required />
                         <input class="form-control form-control-lg m-2" type="text" name="numero_de_ruta" placeholder="Número de Ruta" required />
                         <input class="form-control form-control-lg m-2" type="text" name="numero_movil" placeholder="Número Móvil" />
+                    </div>
+                    <div class="col-md-6 p-3">
                         <input class="form-control form-control-lg m-2" type="text" name="direccion" placeholder="Dirección" />
                         <input class="form-control form-control-lg m-2" type="text" name="tiempo_de_residencia" placeholder="Tiempo de Residencia" />
                         <input class="form-control form-control-lg m-2" type="text" name="pais_de_origen" placeholder="País de Origen" />
@@ -134,9 +139,6 @@
                             <option value="Union Libre">Unión Libre</option>
                         </select>
                         <input class="form-control form-control-lg m-2" type="text" name="persona_a_cargo" placeholder="Persona a Cargo" />
-                    </div>
-            
-                    <div class="col-md-6 p-3">
                         <input class="form-control form-control-lg m-2" type="text" name="prestamos_activos" placeholder="Préstamos Activos" />
                         <input class="form-control form-control-lg m-2" type="text" name="trabajo_actual" placeholder="Trabajo Actual" />
                         <input class="form-control form-control-lg m-2" type="text" name="ganancias_mensuales" placeholder="Ganancias Mensuales" />
@@ -145,12 +147,7 @@
                         <input class="form-control form-control-lg m-2" type="text" name="monto_a_solicitar" placeholder="Monto a Solicitar" />
                         <input class="form-control form-control-lg m-2" type="text" name="valor_cuota" placeholder="Valor de la Cuota" />
                         
-                        <input class="form-control form-control-lg m-2" type="number" name="saldo" placeholder="Saldo" required />
-                        <input class="form-control form-control-lg m-2" type="text" name="tipo_de_cuenta" placeholder="Tipo de Cuenta" required />
-                        <input class="form-control form-control-lg m-2" type="text" name="numero_de_cuenta" placeholder="Número de Cuenta" required />
-                        <input class="form-control form-control-lg m-2" type="text" name="estado_de_cuenta" placeholder="Estado de Cuenta" required />
                     </div>
-            
                     <div class="col-12">
                         <button class="btn btn-primary btn-lg btn-block mb-3" id="crearUsuario" type="submit">Crear Usuario</button>
                     </div>

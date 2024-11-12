@@ -9,6 +9,7 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Inter:slnt,wght@-10..0,100..900&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@500&display=swap" rel="stylesheet">
 
         <!-- Icon Font Stylesheet -->
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"/>
@@ -55,8 +56,28 @@
             .tarjeta {
                 border-radius: 15px;
                 background: linear-gradient(135deg, #013a73, #376994);
-                max-width: 350px; /* Tamaño máximo para que parezca una tarjeta */
-                font-family: 'Arial', sans-serif;
+                max-width: 350px;
+                font-family: 'Roboto Mono', monospace;
+                position: relative;
+                overflow: hidden;
+            }
+
+            .tarjeta::before {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: repeating-linear-gradient(
+                    45deg,
+                    rgba(255, 255, 255, 0.1),
+                    rgba(255, 255, 255, 0.1) 10px,
+                    transparent 10px,
+                    transparent 20px
+                );
+                opacity: 0.2; /* Ajusta la opacidad para un efecto más sutil */
+                pointer-events: none;
             }
 
             .tarjeta .card-title {
@@ -70,6 +91,10 @@
 
             .tarjeta .card-body {
                 padding: 1.25rem;
+            }
+
+            .valid_text {
+                font-size: 0.75rem; /* Ajusta el tamaño de la fuente */
             }
             
         </style>
@@ -112,10 +137,7 @@
     <div class="container">
         <div class="dashboard text-white">
             <div class="mb-3">
-                <h5 class="text-uppercase text-white fs-4">HOLA <%= nombre.split(' ')[0] %></h5>
-                <h6 class="account-number mb-1"><%= tipo_documento %> - <%= numero_documento %></h6>
-                <h6 class="account-number mb-1">Número de Ruta - <%= numero_de_ruta %></h6>
-                <p class="balance mb-1"><%= saldo %></p>
+                <h5 class="text-white fs-4">¡Hola! <%= nombre.split(' ')[0] %></h5>                <p class="balance mb-1"><%= saldo %></p>
                 <p class="available">Saldo disponible</p>
             </div>
             <% if (logued_user_rol === 'admin') { %>
@@ -135,18 +157,21 @@
                     <% } %>
                 </h6>
                 <p class="d-flex justify-content-between text_bold mb-1">Tipo de cuenta: <span class="text_normal"><%= tipo_de_cuenta %></span></p>
-                
-                <p class="d-flex justify-content-between text_bold">Número de cuenta: <span class="text_normal"><%= numero_de_cuenta %></span></p>
+                <p class="d-flex justify-content-between text_bold mb-1">Número de cuenta: <span class="text_normal"><%= numero_de_cuenta %></span></p>
+                <p class="d-flex justify-content-between text_bold">Número de Ruta: <span class="text_normal"><%= numero_de_ruta %></span></p>
             </div>
     
             <!-- Datos personales siempre visibles -->
             <div class="text-center details mt-3">
+                <h5 class="text_bold mb-1 text-uppercase">DIRECCION</h5>
                 <% if (direccion && direccion !== 'NaN') { %>
-                    <h5 class="text_bold mb-1 text-uppercase">Dirección</h5>
                     <h6 class="text_bold mb-1 text-uppercase"><%= direccion %></h6>
-                    <hr>
                 <% } %>
+                <hr>
                 <div id="personalData" class="mt-2">
+                    <p class="mb-1 text_bold d-flex justify-content-between">Tipo de documento: <span class="text_normal"><%= tipo_documento %></span></p>
+                    <p class="mb-1 text_bold d-flex justify-content-between">Número de documento: <span class="text_normal"><%= numero_documento %></span></p>
+
                     <% if (numero_movil && numero_movil !== 'NaN') { %>
                         <p class="mb-1 text_bold d-flex justify-content-between">Teléfono: <span class="text_normal"><%= numero_movil %></span></p>
                     <% } %>
@@ -170,6 +195,8 @@
             
             <!-- Div oculto para los datos adicionales -->
             <div id="additionalData" class="details mt-3">
+                <h5 class="text-center text_bold mb-1 text-uppercase">INFORMACION FINANCIERA</h5>
+                <hr>
                 <% if (prestamos_activos && prestamos_activos !== 'NaN') { %>
                     <p class="mb-1 text_bold d-flex justify-content-between">Préstamos activos: <span class="text_normal"><%= prestamos_activos %></span></p>
                 <% } %>
@@ -201,15 +228,18 @@
                         <div class="">
                             <h1 class="text-white text-end mb-5"><i class="fab fa-slack me-1"></i> Citiprest</h1>
                         </div>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <p class="mb-0 fs-4"><%= numero_de_tarjeta %></p>
+                        <div class="d-flex justify-content-center align-items-center">
+                            <p class="mb-1 fs-4"><%= numero_de_tarjeta %></p>
+                        </div>
+                        <div class="m-x d-flex justify-content-center align-items-center">
+                            <p class="d-flex mb-0">
+                                <span class="valid_text d-block ">VALID<br>THRU</span>
+                                <strong class="mx-2 fs-5"><%= fecha_caducidad_tarjeta %></strong>
+                            </p>
                         </div>
                         <div class="d-flex justify-content-between align-items-center">
-                            <p class="mb-0"><span class="fs-6">Valida Hasta </span><strong class="fs-5" ><%= fecha_caducidad_tarjeta %></strong></p>
-                        </div>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <p class="text-start mb-0"><%= nombre %></p>
-                            <img src="/img/mc_symbol_opt_73_3x.png" alt="Master Card" class="" style="max-width: 20%;">
+                            <p class="text-start mb-0" ><%= nombre %></p>
+                            <img src="/img/mc_symbol_opt_73_3x.png" alt="Master Card" class="" style="max-width: 25%;">
                         </div>
                     </div>
                 </div>
@@ -274,10 +304,13 @@
                                 <h1 class="text-white text-end mb-5"><i class="fab fa-slack me-2"></i> Citiprest</h1>
                             </div>
                             <div class="d-flex justify-content-between align-items-center">
-                                <p class="mb-0 fs-4">${data.numeroDeTarjeta}</p>
+                                <p class="mb-1 fs-4">${data.numeroDeTarjeta}</p>
                             </div>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <p class="mb-0"><span class="fs-6">Valida Hasta </span><strong class="fs-5" >${data.fechaCaducidadTarjeta}</strong></p>
+                            <div class="m-1 d-flex justify-content-center align-items-center">
+                                <p class="d-flex mb-0">
+                                    <span class="valid_text d-block ">VALID<br>THRU</span>
+                                    <strong class="mx-2 fs-5">${data.fechaCaducidadTarjeta}</strong>
+                                </p>
                             </div>
                             <div class="d-flex justify-content-between align-items-center">
                                 <p class="text-start mb-0"><%= nombre %></p>
