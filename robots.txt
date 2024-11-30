@@ -1,0 +1,13 @@
+User-agent: *
+Disallow: /admin/
+Disallow: /dashboard/
+
+User-agent: *
+Allow: /
+
+Disallow: /config/
+Disallow: /scripts/
+Disallow: /private/
+Disallow: /cgi-bin/
+
+Sitemap: https://www.citiprest.com/sitemap.xml
